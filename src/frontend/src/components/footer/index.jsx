@@ -9,6 +9,7 @@ import {PlaylistPlay, VolumeDown} from "@material-ui/icons";
 import {Slider, Grid} from "@material-ui/core";
 import PauseIcon from '@material-ui/icons/Pause';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+import RepeatOneIcon from '@material-ui/icons/RepeatOne';
 import music from '../../musics/linkinpark.mp3'
 
 const Footer = () => {
@@ -16,15 +17,18 @@ const Footer = () => {
     const [playing, setPlaying] = useState(false);
     const [mute, setMute] = useState(true)
     const [value, setValue] = useState(20);
+    const [repeat, setRepeat] = useState(false)
     const toggle = () => setPlaying(!playing);
     const muteMusic = () => setMute(!mute);
+    const repeatMusic = () => setRepeat(!repeat)
 
     useEffect(() => {
+        repeat ? audio.loop = true : audio.pause();
         playing ? audio.play() : audio.pause();
         mute ? audio.muted = false : audio.muted = true;
         audio.volume = value / 100;
         mute ? audio.volume = value / 100 : setValue(0);
-    }, [playing, mute, value])
+    }, [playing, mute, value, repeat])
 
     useEffect(() => {
         audio.addEventListener('ended', () => setPlaying(false));
@@ -34,18 +38,18 @@ const Footer = () => {
     })
 
     const handleChange = (event, newValue) => {
-         setValue(newValue);
+        setValue(newValue);
     };
     return (
         <div className='footer'>
             <div className='footer__left'>
                 <img
                     className='footer__albumLogo'
-                    src='https://i.redd.it/t70zhpbokdt11.jpg'
+                    src='https://angelacampbellblog.files.wordpress.com/2016/11/4f1691b44506ee4b727454799b8488f7.jpg'
                     alt=''/>
                 <div className='footer__songInfo'>
-                    <h4>Yeah!</h4>
-                    <p>Pusher</p>
+                    <h4>In the end</h4>
+                    <p>Linkin Park</p>
                 </div>
             </div>
 
@@ -56,7 +60,8 @@ const Footer = () => {
                     <PauseIcon fontSize='large' className='footer__icon'/> :
                     <PlayCircleOutlineIcon fontSize='large' className='footer__icon'/>}</button>
                 <SkipNextIcon className='footer__icon'/>
-                <RepeatIcon className='footer__green'/>
+                <button className={'btn'} onClick={repeatMusic}>{repeat ? <RepeatIcon className='footer__green'/> :
+                    <RepeatOneIcon className='footer__green'/>}</button>
             </div>
 
             <div className='footer__right'>
