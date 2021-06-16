@@ -9,18 +9,22 @@ import {PlaylistPlay, VolumeDown} from "@material-ui/icons";
 import {Slider, Grid} from "@material-ui/core";
 import PauseIcon from '@material-ui/icons/Pause';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+import music from '../../musics/linkinpark.mp3'
 
 const Footer = () => {
-    const [audio] = useState(new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'));
+    const [audio] = useState(new Audio(music));
     const [playing, setPlaying] = useState(false);
-    const [mute, setMute] = useState(false)
+    const [mute, setMute] = useState(true)
+    const [value, setValue] = useState(20);
     const toggle = () => setPlaying(!playing);
     const muteMusic = () => setMute(!mute);
 
     useEffect(() => {
         playing ? audio.play() : audio.pause();
         mute ? audio.muted = false : audio.muted = true;
-    }, [playing, mute])
+        audio.volume = value / 100;
+        mute ? audio.volume = value / 100 : setValue(0);
+    }, [playing, mute, value])
 
     useEffect(() => {
         audio.addEventListener('ended', () => setPlaying(false));
@@ -28,6 +32,10 @@ const Footer = () => {
             audio.removeEventListener('ended', () => setPlaying(false));
         }
     })
+
+    const handleChange = (event, newValue) => {
+         setValue(newValue);
+    };
     return (
         <div className='footer'>
             <div className='footer__left'>
@@ -60,7 +68,9 @@ const Footer = () => {
                         <button className={'btn'} onClick={muteMusic}>{mute ? <VolumeDown/> : <VolumeOffIcon/>}</button>
                     </Grid>
                     <Grid item xs>
-                        <Slider/>
+                        <Slider
+                            value={value} onChange={handleChange} aria-labelledby="continuous-slider"
+                        />
                     </Grid>
                 </Grid>
             </div>
