@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 @Transactional
 public interface AlbumRepository extends JpaRepository<Album, Long> {
-    List<Album> findAlbumByNameContaining(String name);
+    List<Album> findByNameContaining(String name);
 }

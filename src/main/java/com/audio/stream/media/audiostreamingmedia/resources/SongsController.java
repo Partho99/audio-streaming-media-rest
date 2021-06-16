@@ -4,14 +4,10 @@ import com.audio.stream.media.audiostreamingmedia.converter.ArtistConverter;
 import com.audio.stream.media.audiostreamingmedia.dtos.ArtistDto;
 import com.audio.stream.media.audiostreamingmedia.dtos.MovieSongsDetailsDto;
 import com.audio.stream.media.audiostreamingmedia.dtos.SongDetailsDto;
-import com.audio.stream.media.audiostreamingmedia.entities.Artist;
-import com.audio.stream.media.audiostreamingmedia.entities.Genre;
-import com.audio.stream.media.audiostreamingmedia.entities.Movie;
-import com.audio.stream.media.audiostreamingmedia.entities.Song;
-import com.audio.stream.media.audiostreamingmedia.service.ArtistsService;
-import com.audio.stream.media.audiostreamingmedia.service.GenreService;
-import com.audio.stream.media.audiostreamingmedia.service.MovieService;
-import com.audio.stream.media.audiostreamingmedia.service.SongsService;
+import com.audio.stream.media.audiostreamingmedia.entities.*;
+import com.audio.stream.media.audiostreamingmedia.repository.SongsRepository;
+import com.audio.stream.media.audiostreamingmedia.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/songs")
+@CrossOrigin
 public class SongsController {
 
     private final SongsService songsService;
@@ -27,14 +23,17 @@ public class SongsController {
     private final ArtistConverter artistConverter;
     private final MovieService movieService;
     private final GenreService genreService;
+    private final AlbumService albumService;
 
     public SongsController(SongsService songsService, ArtistsService artistsService,
-                           ArtistConverter artistConverter, MovieService movieService, GenreService genreService) {
+                           ArtistConverter artistConverter, MovieService movieService,
+                           GenreService genreService, AlbumService albumService) {
         this.songsService = songsService;
         this.artistsService = artistsService;
         this.artistConverter = artistConverter;
         this.movieService = movieService;
         this.genreService = genreService;
+        this.albumService = albumService;
     }
 
     @PostMapping("/save-song")
@@ -59,8 +58,10 @@ public class SongsController {
     public void saveMovieSongs(@RequestBody MovieSongsDetailsDto movieSongsDetailsDto) {
         Movie movie = new Movie();
         List<Song> songs = movieSongsDetailsDto.getSongs();
-        Set<Genre> genres =  movieSongsDetailsDto.getGenres();
+        List<Genre> genres = movieSongsDetailsDto.getGenres();
+        List<Artist> artists = movieSongsDetailsDto.getArtists();
 
+        Album album = movieSongsDetailsDto.getAlbum();
         movie.setName(movieSongsDetailsDto.getName());
         movie.setImageUrl(movieSongsDetailsDto.getImageUrl());
         movie.setAlbum(movieSongsDetailsDto.getAlbum());
@@ -68,9 +69,11 @@ public class SongsController {
         movie.setGenres(genres);
         movie.setActiveStatus(movieSongsDetailsDto.getActiveStatus());
 
-        System.out.println(movieSongsDetailsDto.getAlbum());
 
+        songsService.saveAll(songs);
+        artistsService.saveAll(artists);
         genreService.saveAll(genres);
+        albumService.save(album);
         movieService.save(movie);
 
 
@@ -79,6 +82,11 @@ public class SongsController {
     @GetMapping("/show-song")
     public List<Song> showSongs() {
         return songsService.findAll();
+    }
+
+    @GetMapping("/show-genre")
+    public List<Song> showGenre() {
+        return songsService.genreFind();
     }
 
     public List<SongDetailsDto> showSongDetails() {
@@ -98,5 +106,10 @@ public class SongsController {
     @GetMapping("/show-movie/{name}")
     public Optional<Movie> showMovie(@PathVariable String name) {
         return movieService.findByName(name);
+    }
+
+    @GetMapping("/show-albums/{albumName}")
+    public List<Album> showSearchedAlbums(@PathVariable String albumName) {
+        return albumService.findByName(albumName);
     }
 }

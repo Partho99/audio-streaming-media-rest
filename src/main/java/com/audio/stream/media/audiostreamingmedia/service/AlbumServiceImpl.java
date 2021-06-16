@@ -38,6 +38,6 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public List<Album> findByName(String name) {
-        return albumRepository.findAlbumByNameContaining(name);
+        return albumRepository.findByNameContaining(name);
     }
 }

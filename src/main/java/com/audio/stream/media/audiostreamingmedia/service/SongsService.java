@@ -15,4 +15,9 @@ public interface SongsService {
     Song save(Song song);
 
     Optional<Song> findByName(String name);
+
+    void saveAll(List<Song> songs);
+
+    List<Song> genreFind();
+
 }

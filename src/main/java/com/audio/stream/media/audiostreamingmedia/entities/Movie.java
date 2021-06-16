@@ -28,7 +28,7 @@ public class Movie extends AuditableEntity<Movie> {
     @JsonIgnore
     @JoinTable(name = "MOVIE_SONGS_GENRE", joinColumns = {@JoinColumn(name = "MOVIE_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "GENRE_ID", referencedColumnName = "ID")})
-    private Set<Genre> genres;
+    private List<Genre> genres;
 
     @OneToMany
     @JsonIgnore
@@ -41,7 +41,7 @@ public class Movie extends AuditableEntity<Movie> {
     @JoinColumn(name = "ALBUM_ID")
     private Album album;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.DETACH)
     @JsonIgnore
     @JoinTable(name = "MOVIE_SONGS", joinColumns = {@JoinColumn(name = "MOVIE_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "SONG_ID", referencedColumnName = "ID")})
@@ -80,11 +80,11 @@ public class Movie extends AuditableEntity<Movie> {
         this.imageUrl = imageUrl;
     }
 
-    public Set<Genre> getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(Set<Genre> genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
 

@@ -1,13 +1,11 @@
 package com.audio.stream.media.audiostreamingmedia.dtos;
 
 
-import com.audio.stream.media.audiostreamingmedia.entities.Album;
-import com.audio.stream.media.audiostreamingmedia.entities.Artist;
-import com.audio.stream.media.audiostreamingmedia.entities.Band;
-import com.audio.stream.media.audiostreamingmedia.entities.Movie;
+import com.audio.stream.media.audiostreamingmedia.entities.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class SongDetailsDto {
 
@@ -20,6 +18,7 @@ public class SongDetailsDto {
     private Boolean activeStatus;
 
     private List<Artist> artists;
+    private Set<Genre> genres;
 
     public Long getId() {
         return id;
@@ -85,4 +84,11 @@ public class SongDetailsDto {
         this.activeStatus = activeStatus;
     }
 
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
 }

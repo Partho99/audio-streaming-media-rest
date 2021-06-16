@@ -16,5 +16,5 @@ public interface GenreService {
 
     Optional<Genre> findByName(String name);
 
-    void saveAll(Set<Genre> genres);
+    void saveAll(List<Genre> genres);
 }

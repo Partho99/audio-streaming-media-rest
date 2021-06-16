@@ -1,10 +1,14 @@
 package com.audio.stream.media.audiostreamingmedia.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Table(name = "SONG")
 @Entity
@@ -30,6 +34,11 @@ public class Song extends AuditableEntity<Song> {
 
     @Column(name = "SLUG")
     private String slug;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "SONG_GENRES", joinColumns = {@JoinColumn(name = "SONG_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "GENRE_ID", referencedColumnName = "ID")})
+    private List<Genre> genres;
 
     public Long getId() {
         return id;
@@ -77,6 +86,14 @@ public class Song extends AuditableEntity<Song> {
 
     public void setSlug(String slug) {
         this.slug = slug;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 
     @Override

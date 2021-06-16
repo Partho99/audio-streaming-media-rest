@@ -38,7 +38,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public void saveAll(Set<Genre> genres) {
+    public void saveAll(List<Genre> genres) {
         genreRepository.saveAll(genres);
     }
 }

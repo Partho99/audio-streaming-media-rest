@@ -1,6 +1,7 @@
 package com.audio.stream.media.audiostreamingmedia.dtos;
 
 import com.audio.stream.media.audiostreamingmedia.entities.Album;
+import com.audio.stream.media.audiostreamingmedia.entities.Artist;
 import com.audio.stream.media.audiostreamingmedia.entities.Genre;
 import com.audio.stream.media.audiostreamingmedia.entities.Song;
 
@@ -18,7 +19,8 @@ public class MovieSongsDetailsDto {
 
     private List<Song> songs;
     private Album album;
-    private Set<Genre> genres;
+    private List<Genre> genres;
+    private List<Artist> artists;
 
     public Long getId() {
         return id;
@@ -76,11 +78,19 @@ public class MovieSongsDetailsDto {
         this.album = album;
     }
 
-    public Set<Genre> getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(Set<Genre> genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
+    }
+
+    public List<Artist> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
     }
 }
