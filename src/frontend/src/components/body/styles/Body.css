@@ -5,7 +5,7 @@
     color: white;
     overflow-y: scroll;
     height: 100vh;
-    background: rgb(91, 87, 115) linear-gradient(transparent, rgba(0, 0, 0, 1));
+    background: rgb(91, 87, 232) linear-gradient(transparent, rgba(0, 0, 0, 1));
 }
 
 .body__info {
@@ -17,7 +17,7 @@
 .body__info > img {
     height: 20vh;
     margin: 0 20px;
-    box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 60px rgba(0, 120, 120, 0.5);
 }
 
 .body__infoText {
