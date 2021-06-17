@@ -43,7 +43,7 @@
 }
 
 .footer__green {
-    color: darkred;
+    color: aquamarine;
 }
 
 .footer__songInfo > h4 {
@@ -62,7 +62,7 @@
 }
 
 .footer__right * .MuiSlider-root {
-    color: green ;
+    color: aquamarine ;
 }
 
 .btn {

@@ -10,6 +10,7 @@ import {Slider, Grid} from "@material-ui/core";
 import PauseIcon from '@material-ui/icons/Pause';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import RepeatOneIcon from '@material-ui/icons/RepeatOne';
+import Replay10Icon from '@material-ui/icons/Replay10';
 import music from '../../musics/linkinpark.mp3'
 
 const Footer = () => {
@@ -23,11 +24,11 @@ const Footer = () => {
     const repeatMusic = () => setRepeat(!repeat)
 
     useEffect(() => {
-        repeat ? audio.loop = true : audio.pause();
         playing ? audio.play() : audio.pause();
+        audio.loop = repeat;
         mute ? audio.muted = false : audio.muted = true;
         audio.volume = value / 100;
-        mute ? audio.volume = value / 100 : setValue(0);
+        mute ?  setValue(value) : setValue(0) ;
     }, [playing, mute, value, repeat])
 
     useEffect(() => {
@@ -40,6 +41,7 @@ const Footer = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
     return (
         <div className='footer'>
             <div className='footer__left'>
@@ -60,8 +62,9 @@ const Footer = () => {
                     <PauseIcon fontSize='large' className='footer__icon'/> :
                     <PlayCircleOutlineIcon fontSize='large' className='footer__icon'/>}</button>
                 <SkipNextIcon className='footer__icon'/>
-                <button className={'btn'} onClick={repeatMusic}>{repeat ? <RepeatIcon className='footer__green'/> :
-                    <RepeatOneIcon className='footer__green'/>}</button>
+                <button className={'btn'} onClick={repeatMusic}>{repeat ?
+                    <RepeatOneIcon className='footer__green'/> : <RepeatIcon className='footer__green'/>}</button>
+                <Replay10Icon className='footer__green'/>
             </div>
 
             <div className='footer__right'>
