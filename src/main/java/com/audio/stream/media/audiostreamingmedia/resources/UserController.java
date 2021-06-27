@@ -40,6 +40,7 @@ public class UserController {
     public ResponseEntity<User> register(@RequestBody User user) {
         LOGGER.info("UserResourceImpl : register");
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+//        user.setRole(roleRepository.findByName(ConstantUtils.USER.toString()));
         user.setRole(roleRepository.findByName(ConstantUtils.USER.toString()));
         User savedUser = userRepository.saveAndFlush(user);
 
@@ -47,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> authenticate(@RequestBody User user) {
+    public ResponseEntity<?> authenticate(@RequestBody User user) {
         LOGGER.info("UserResourceImpl : authenticate");
 
 
@@ -56,12 +57,11 @@ public class UserController {
         if (authentication.isAuthenticated()) {
             String email = user.getEmail();
             User loggedInUser = userRepository.findByEmailOrUsername(email);
-            String token = tokenProvider.createToken(email, userRepository.findByEmailOrUsername(email).getRole());
-            user.setToken(token);
-            return new ResponseEntity<User>(loggedInUser, HttpStatus.OK);
+            loggedInUser.setToken(tokenProvider.createToken(email, userRepository.findByEmailOrUsername(email).getRole()));
+            return new ResponseEntity<>(loggedInUser, HttpStatus.OK);
         }
 
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        return null;
     }
 
 
