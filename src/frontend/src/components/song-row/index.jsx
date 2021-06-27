@@ -1,7 +1,9 @@
 import React from 'react';
 import './styles/SongRow.css'
+import Footer from "../footer";
 const SongRow = ({track}) => {
     return (
+        <>
         <div className={'songRow'}>
             <img className={'songRow__album'} src={''} alt={'ROW'}/>
             <div className='songRow__info'>
@@ -10,7 +12,9 @@ const SongRow = ({track}) => {
                     track full description
                 </p>
             </div>
+
         </div>
+        </>
     );
 };
 

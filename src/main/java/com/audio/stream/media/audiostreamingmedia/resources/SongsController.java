@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
+@RequestMapping("/")
 @CrossOrigin
 public class SongsController {
 
@@ -36,7 +37,7 @@ public class SongsController {
         this.albumService = albumService;
     }
 
-    @PostMapping("/save-song")
+    @PostMapping("save-song")
     public void saveSong(@RequestBody SongDetailsDto songDetailsDto) {
         Song song = new Song();
         List<Artist> artists = songDetailsDto.getArtists();
@@ -54,7 +55,7 @@ public class SongsController {
     }
 
 
-    @PostMapping("/save-movie-songs")
+    @PostMapping("save-movie-songs")
     public void saveMovieSongs(@RequestBody MovieSongsDetailsDto movieSongsDetailsDto) {
         Movie movie = new Movie();
         List<Song> songs = movieSongsDetailsDto.getSongs();
@@ -79,12 +80,12 @@ public class SongsController {
 
     }
 
-    @GetMapping("/show-song")
+    @GetMapping("show-song")
     public List<Song> showSongs() {
         return songsService.findAll();
     }
 
-    @GetMapping("/show-genre")
+    @GetMapping("show-genre")
     public List<Song> showGenre() {
         return songsService.genreFind();
     }
@@ -93,7 +94,7 @@ public class SongsController {
         return null;
     }
 
-    @GetMapping("/show-artists")
+    @GetMapping("show-artists")
     public List<ArtistDto> showAllArtist() {
         List<Artist> artists = artistsService.findAll();
         List<ArtistDto> artistDtos = artistConverter.entityToDto(artists);
@@ -103,12 +104,12 @@ public class SongsController {
     /**
      * next day should implement list of entry show using search
      */
-    @GetMapping("/show-movie/{name}")
+    @GetMapping("show-movie/{name}")
     public Optional<Movie> showMovie(@PathVariable String name) {
         return movieService.findByName(name);
     }
 
-    @GetMapping("/show-albums/{albumName}")
+    @GetMapping("show-albums/{albumName}")
     public List<Album> showSearchedAlbums(@PathVariable String albumName) {
         return albumService.findByName(albumName);
     }

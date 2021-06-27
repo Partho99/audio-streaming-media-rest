@@ -25,6 +25,7 @@
 }
 
 .footer__center {
+    position: relative;
     flex: 0.4;
     padding: 0 100px;
     color: white;
@@ -32,6 +33,13 @@
     align-items: center;
     justify-content: space-between;
     max-width: 300px;
+}
+
+.footer__center__bottom {
+    position: absolute;
+    bottom: -10px;
+    width: 40vw;
+    cursor: pointer;
 }
 
 .footer__right {
